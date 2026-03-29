@@ -1,0 +1,53 @@
+{
+	"compiler": {
+		"version": "0.8.30+commit.73712a01"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"contracts/contract.sol": "SupplyChainProvenance"
+		},
+		"evmVersion": "prague",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"contracts/contract.sol": {
+			"keccak256": "0x0587a0ce173a09180ccfdb33905d4a6c172346777ebf8dbed1c210d4989e1b91",
+			"license": "GPL-3.0",
+			"urls": [
+				"bzz-raw://13d34bf614c2f019ca5ba5286f6577eee9c59671cd02d0d397585b24d57c40b2",
+				"dweb:/ipfs/QmX5ToW1TsAEBcun2wDkoCmRm7DLgd9XjhuhDZdKsjEn4M"
+			]
+		},
+		"hardhat/console.sol": {
+			"keccak256": "0x885fa3cfa9f4e20e518c0af758279a1b91ee1e12f357fe4d3836cff13f015afe",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://2f72a71b69b477c295ccbfeeb4471f092c697f7a93032bfbc481e375d7fb3103",
+				"dweb:/ipfs/QmQPUn3BogegME1oMe292sGSGPgeph1yBM5p3q5Ct37fih"
+			]
+		}
+	},
+	"version": 1
+}
