@@ -13,6 +13,35 @@
 			{
 				"inputs": [
 					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"name": "actorList",
+				"outputs": [
+					{
+						"internalType": "enum SupplyChainProvenance.actorRole",
+						"name": "role",
+						"type": "uint8"
+					},
+					{
+						"internalType": "address",
+						"name": "actorAddress",
+						"type": "address"
+					},
+					{
+						"internalType": "bool",
+						"name": "exists",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
 						"internalType": "uint256",
 						"name": "itemId",
 						"type": "uint256"
@@ -61,8 +90,41 @@
 					}
 				],
 				"name": "getItem",
-				"outputs": [],
-				"stateMutability": "nonpayable",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "id",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string",
+						"name": "itemName",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "itemMetadata",
+						"type": "string"
+					},
+					{
+						"internalType": "address",
+						"name": "itemCreator",
+						"type": "address"
+					},
+					{
+						"components": [
+							{
+								"internalType": "string",
+								"name": "status",
+								"type": "string"
+							}
+						],
+						"internalType": "struct SupplyChainProvenance.itemStatus",
+						"name": "status",
+						"type": "tuple"
+					}
+				],
+				"stateMutability": "view",
 				"type": "function"
 			},
 			{
@@ -74,8 +136,80 @@
 					}
 				],
 				"name": "getSignature",
-				"outputs": [],
-				"stateMutability": "nonpayable",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "signerAddress",
+						"type": "address"
+					},
+					{
+						"internalType": "enum SupplyChainProvenance.actorRole",
+						"name": "signerRole",
+						"type": "uint8"
+					},
+					{
+						"internalType": "uint256",
+						"name": "signatureTimestamp",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string",
+						"name": "signatureNote",
+						"type": "string"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"name": "itemList",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "itemId",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string",
+						"name": "itemName",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "metadata",
+						"type": "string"
+					},
+					{
+						"internalType": "address",
+						"name": "creator",
+						"type": "address"
+					},
+					{
+						"components": [
+							{
+								"internalType": "string",
+								"name": "status",
+								"type": "string"
+							}
+						],
+						"internalType": "struct SupplyChainProvenance.itemStatus",
+						"name": "status",
+						"type": "tuple"
+					},
+					{
+						"internalType": "bool",
+						"name": "exists",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
 				"type": "function"
 			},
 			{
@@ -138,11 +272,11 @@
 	},
 	"sources": {
 		"contracts/contract.sol": {
-			"keccak256": "0xa70e3fadb81321b4039dff7bd596af78cf5f03d9f4e51db958b690f83061f41d",
+			"keccak256": "0x6e09e7c559778cc1418dc76ed05ffcd6aac732279ee8d181a6d727ab414f25cf",
 			"license": "GPL-3.0",
 			"urls": [
-				"bzz-raw://d6b8d25fc7e3a74423a817c66a38489a6fa9a2653029a4201f7225a75ad5d7fb",
-				"dweb:/ipfs/QmRx9qzz2VLAoa7wJ7yd3ayuJD9dHRtzj3995N6y1NXdPe"
+				"bzz-raw://5f1c36d5e97f45fb5a7467cabd370bacf07a3d13bb0935cdd2e0eba51569abfd",
+				"dweb:/ipfs/QmTjDyW7qgkhHBEuvFf3eU6i4rhXjjJPo9pYHwSXe5sjkj"
 			]
 		},
 		"hardhat/console.sol": {

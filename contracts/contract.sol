@@ -38,9 +38,12 @@ contract SupplyChainProvenance {
         itemStatus status;
         bool exists;
     }
-
+    mapping(uint256 => item) public itemList;
+    mapping(address => actor) public actorList;
+    uint16 nextItemIndex = 1; //THE ITEM ID WILL BE THE ITEMS INDEX ON THIS LIST
     address public owner; 
     //Okay so for now we're gonna have a global owner, this is the person who can register actors and probably other things
+    
     // For now just gonna write some function signatures
     modifier onlyOwner() {
         require(msg.sender == owner, "Only the owner can do this");
@@ -53,17 +56,36 @@ contract SupplyChainProvenance {
         // Should add an actor to a list
     }
     function createItem(string calldata itemName, string calldata metadata) external returns (uint256) {
-        // Create an item object?
+        // Create an item object
+        //add it to the itemList
+        // increment nextItemIndex
+        uint256 itemId = nextItemIndex;
+        nextItemIndex++; 
+        return itemId;
     }
     function actorSign(uint256 itemId, string calldata signatureNote) external  {
         // This function will be used for an actor to sign their action
         // May need to be split up into 6 different functions, one for each actor, 
     }
-    function getItem(uint256 itemId) external {
-        // Returns the item?
+    function getItem(uint256 itemId) external view returns (
+        uint256 id,
+        string memory itemName,
+        string memory itemMetadata,
+        address itemCreator,
+        itemStatus memory status
+    ) // return struct data as a tuple for reasons, trust me bro
+    {
+        // Find the item on the mapping using itemID as index
+        // Returns the item data as a tuple
     }
-    function getSignature(uint256 itemId) external {
+    function getSignature(uint256 itemId) external view returns (
+        address signerAddress,
+        actorRole signerRole,
+        uint256 signatureTimestamp,
+        string memory signatureNote
+    ) {
         // This should be like a function that lets you view (all?) the signatures for the item
+        // Should items have a list for signatures?
     }
 
     }
