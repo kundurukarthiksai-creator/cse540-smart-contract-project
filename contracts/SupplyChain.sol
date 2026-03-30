@@ -3,37 +3,50 @@ pragma solidity ^0.8.0;
 
 /**
  * @title SupplyChain Provenance System
- * @author Team 12
- * @notice This contract tracks products across a supply chain using blockchain.
- * It allows stakeholders to register products, update status, and transfer ownership.
+ * @notice Advanced version with role-based access control
  */
 contract SupplyChain {
 
-    // Enum representing product status
+    // Roles in supply chain
+    enum Role { None, Supplier, Manufacturer, Distributor, Retailer }
+
+    // Product status
     enum Status { Created, Shipped, Received, Delivered }
 
-    // Struct representing a product
     struct Product {
         uint256 id;
         address owner;
         Status status;
     }
 
-    // Mapping from product ID to Product
+    // Store users and their roles
+    mapping(address => Role) public roles;
+
+    // Store products
     mapping(uint256 => Product) public products;
 
-    // Counter for product IDs
     uint256 public productCount;
 
     // Events
+    event RoleAssigned(address user, Role role);
     event ProductRegistered(uint256 productId, address owner);
     event StatusUpdated(uint256 productId, Status status);
     event OwnershipTransferred(uint256 productId, address newOwner);
 
     /**
-     * @notice Registers a new product in the supply chain
+     * @notice Assign role to a user
+     */
+    function assignRole(address _user, Role _role) public {
+        roles[_user] = _role;
+        emit RoleAssigned(_user, _role);
+    }
+
+    /**
+     * @notice Register a new product (only Supplier)
      */
     function registerProduct() public {
+        require(roles[msg.sender] == Role.Supplier, "Only supplier can register");
+
         productCount++;
 
         products[productCount] = Product({
@@ -46,12 +59,10 @@ contract SupplyChain {
     }
 
     /**
-     * @notice Updates the status of a product
-     * @param _productId The ID of the product
-     * @param _status The new status
+     * @notice Update product status
      */
     function updateStatus(uint256 _productId, Status _status) public {
-        require(products[_productId].owner == msg.sender, "Not product owner");
+        require(products[_productId].owner == msg.sender, "Not owner");
 
         products[_productId].status = _status;
 
@@ -59,12 +70,10 @@ contract SupplyChain {
     }
 
     /**
-     * @notice Transfers ownership of a product
-     * @param _productId The ID of the product
-     * @param _newOwner Address of the new owner
+     * @notice Transfer ownership
      */
     function transferOwnership(uint256 _productId, address _newOwner) public {
-        require(products[_productId].owner == msg.sender, "Not product owner");
+        require(products[_productId].owner == msg.sender, "Not owner");
 
         products[_productId].owner = _newOwner;
 
@@ -72,8 +81,7 @@ contract SupplyChain {
     }
 
     /**
-     * @notice Retrieves product details
-     * @param _productId The ID of the product
+     * @notice Get product details
      */
     function getProduct(uint256 _productId) public view returns (
         uint256,
