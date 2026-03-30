@@ -8,7 +8,7 @@ pragma solidity ^0.8.0;
 contract SupplyChain {
 
     // Roles in supply chain
-    enum Role { None, Supplier, Manufacturer, Distributor, Retailer }
+     enum Role { None, Supplier, Manufacturer, Distributor, Retailer, Regulator, Consumer }
 
     // Product status
     enum Status { Created, Shipped, Received, Delivered }
