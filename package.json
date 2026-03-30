@@ -1,1 +1,16 @@
 
+{
+  "name": "cse540-smart-contract-project",
+  "version": "1.0.0",
+  "description": "Blockchain-based supply chain provenance system",
+  "main": "index.js",
+  "scripts": {
+    "test": "npx hardhat test"
+  },
+  "author": "Team 12",
+  "license": "MIT",
+  "devDependencies": {
+    "hardhat": "^2.22.0",
+    "@nomicfoundation/hardhat-toolbox": "^3.0.0"
+  }
+}
