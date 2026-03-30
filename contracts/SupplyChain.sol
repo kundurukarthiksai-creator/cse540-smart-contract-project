@@ -100,4 +100,12 @@ function verifyProduct(uint256 _productId) public {
         Product memory p = products[_productId];
         return (p.id, p.owner, p.status);
     }
+// Consumers can view product details
+function viewProduct(uint256 _productId) public view returns (
+    uint256,
+    address,
+    Status
+) {
+    return getProduct(_productId);
+}
 }
