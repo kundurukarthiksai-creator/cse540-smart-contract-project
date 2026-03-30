@@ -3,28 +3,31 @@ pragma solidity ^0.8.0;
 
 /**
  * @title SupplyChain Provenance System
- * @notice Advanced version with role-based access control
+ * @author Team 12
+ * @notice Tracks product lifecycle across multiple stakeholders using blockchain
  */
 contract SupplyChain {
 
-    // Roles in supply chain
-     enum Role { None, Supplier, Manufacturer, Distributor, Retailer, Regulator, Consumer }
+    // Define roles (6 stakeholders from design)
+    enum Role { None, Supplier, Manufacturer, Distributor, Retailer, Regulator, Consumer }
 
-    // Product status
+    // Product lifecycle status
     enum Status { Created, Shipped, Received, Delivered }
 
+    // Product structure
     struct Product {
         uint256 id;
         address owner;
         Status status;
     }
 
-    // Store users and their roles
+    // Store roles of users
     mapping(address => Role) public roles;
 
     // Store products
     mapping(uint256 => Product) public products;
 
+    // Counter for product IDs
     uint256 public productCount;
 
     // Events
@@ -34,7 +37,7 @@ contract SupplyChain {
     event OwnershipTransferred(uint256 productId, address newOwner);
 
     /**
-     * @notice Assign role to a user
+     * @notice Assign a role to a user
      */
     function assignRole(address _user, Role _role) public {
         roles[_user] = _role;
@@ -58,17 +61,8 @@ contract SupplyChain {
         emit ProductRegistered(productCount, msg.sender);
     }
 
-// Only regulator can verify products
-function verifyProduct(uint256 _productId) public {
-    require(roles[msg.sender] == Role.Regulator, "Only regulator allowed");
-
-    products[_productId].status = Status.Delivered;
-
-    emit StatusUpdated(_productId, Status.Delivered);
-}
-
     /**
-     * @notice Update product status
+     * @notice Update product status (only current owner)
      */
     function updateStatus(uint256 _productId, Status _status) public {
         require(products[_productId].owner == msg.sender, "Not owner");
@@ -79,14 +73,38 @@ function verifyProduct(uint256 _productId) public {
     }
 
     /**
-     * @notice Transfer ownership
+     * @notice Transfer ownership to another stakeholder
      */
     function transferOwnership(uint256 _productId, address _newOwner) public {
         require(products[_productId].owner == msg.sender, "Not owner");
+        require(roles[_newOwner] != Role.None, "Invalid stakeholder");
 
         products[_productId].owner = _newOwner;
 
         emit OwnershipTransferred(_productId, _newOwner);
+    }
+
+    /**
+     * @notice Regulator verifies a product (example validation step)
+     */
+    function verifyProduct(uint256 _productId) public {
+        require(roles[msg.sender] == Role.Regulator, "Only regulator allowed");
+
+        products[_productId].status = Status.Delivered;
+
+        emit StatusUpdated(_productId, Status.Delivered);
+    }
+
+    /**
+     * @notice Consumers can view product details
+     */
+    function viewProduct(uint256 _productId) public view returns (
+        uint256,
+        address,
+        Status
+    ) {
+        Product memory p = products[_productId];
+        return (p.id, p.owner, p.status);
     }
 
     /**
@@ -100,12 +118,4 @@ function verifyProduct(uint256 _productId) public {
         Product memory p = products[_productId];
         return (p.id, p.owner, p.status);
     }
-// Consumers can view product details
-function viewProduct(uint256 _productId) public view returns (
-    uint256,
-    address,
-    Status
-) {
-    return getProduct(_productId);
-}
 }
