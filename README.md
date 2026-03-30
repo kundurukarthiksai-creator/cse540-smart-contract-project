@@ -37,12 +37,15 @@ We propose a decentralized supply chain system that:
 * IPFS (for off-chain storage)
 
 ## Roles in Supply Chain
-- Supplier → Registers products  
-- Manufacturer → Processes products  
-- Distributor → Ships products  
-- Retailer → Final delivery  
+- Supplier -> Registers products
+- Manufacturer -> Processes and updates products
+- Distributor -> Handles shipment and custody transfer
+- Retailer -> Receives and delivers products
+- Regulator -> Verifies and validates product records
+- Consumer -> Views product provenance and authenticity
 
-Role-based access control ensures only authorized users perform specific actions.
+## Smart Contracts
+The current draft uses one Solidity contract, `SupplyChain.sol`, which combines stakeholder registration, product registration, and provenance tracking logic for this milestone.
 
 ## System Architecture
 
