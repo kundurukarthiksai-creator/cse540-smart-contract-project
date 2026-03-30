@@ -58,6 +58,15 @@ contract SupplyChain {
         emit ProductRegistered(productCount, msg.sender);
     }
 
+// Only regulator can verify products
+function verifyProduct(uint256 _productId) public {
+    require(roles[msg.sender] == Role.Regulator, "Only regulator allowed");
+
+    products[_productId].status = Status.Delivered;
+
+    emit StatusUpdated(_productId, Status.Delivered);
+}
+
     /**
      * @notice Update product status
      */
