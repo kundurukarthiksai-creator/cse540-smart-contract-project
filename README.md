@@ -36,6 +36,14 @@ We propose a decentralized supply chain system that:
 * MetaMask
 * IPFS (for off-chain storage)
 
+## Roles in Supply Chain
+- Supplier → Registers products  
+- Manufacturer → Processes products  
+- Distributor → Ships products  
+- Retailer → Final delivery  
+
+Role-based access control ensures only authorized users perform specific actions.
+
 ## System Architecture
 
 The system follows a hybrid on-chain/off-chain architecture:
