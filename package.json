@@ -4,7 +4,8 @@
   "description": "Blockchain-based supply chain provenance system",
   "main": "index.js",
   "scripts": {
-    "test": "npx hardhat test"
+    "compile": "hardhat compile",
+    "test": "hardhat test"
   },
   "author": "Team 12",
   "license": "MIT",

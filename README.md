@@ -1,129 +1,124 @@
 # CSE540 Blockchain-Based Supply Chain Provenance System
 
-## Description
+[![CI](https://github.com/kundurukarthiksai-creator/cse540-smart-contract-project/actions/workflows/ci.yml/badge.svg)](https://github.com/kundurukarthiksai-creator/cse540-smart-contract-project/actions/workflows/ci.yml)
 
-This project implements a blockchain-based supply chain provenance system designed to improve transparency, traceability, and trust across multiple stakeholders. Traditional supply chains rely on centralized and fragmented systems, making it difficult to track products and verify authenticity.
+Smart-contract course project for CSE 540 at Arizona State University. The project models a blockchain-based supply chain provenance system where stakeholders can register products, transfer custody, update lifecycle status, and verify product records.
 
-Our system uses blockchain technology to create a shared, immutable ledger where product lifecycle events are recorded securely. This ensures that all stakeholders have access to a consistent and tamper-proof history of a product.
+## Verified Status
 
-## Problem Statement
+- Contract source: `contracts/SupplyChain.sol`
+- Framework: Hardhat with Solidity `0.8.20`
+- Tests: 8 Hardhat tests covering happy paths and rejected unauthorized actions
+- CI: GitHub Actions installs locked dependencies, compiles the contract, and runs the test suite
+- Scope: smart-contract prototype, not a deployed production application
 
-Modern supply chains involve multiple stakeholders such as suppliers, manufacturers, distributors, retailers, and consumers. However, existing systems store data in isolated, centralized databases, leading to lack of transparency, difficulty in verifying product authenticity, and increased risk of fraud.
+## Problem
 
-## Solution
+Traditional supply chains often depend on fragmented, centralized records. That makes it hard for manufacturers, distributors, retailers, regulators, and consumers to verify product ownership, custody history, and authenticity from a shared source of truth.
 
-We propose a decentralized supply chain system that:
+## Implemented Solution
 
-* Assigns a unique identifier to each product
-* Tracks product lifecycle events on-chain
-* Enables secure ownership and custody transfer
-* Stores critical data immutably using smart contracts
+The current contract implements a compact provenance workflow:
 
-## Features
+- Admin-controlled role assignment for supply chain stakeholders
+- Supplier-only product registration
+- Owner-only lifecycle status updates
+- Ownership transfer to registered stakeholders
+- Regulator-only product verification
+- Read-only product views for provenance lookup
 
-* Product registration with unique ID
-* Ownership and custody transfer tracking
-* Status updates (Created, Shipped, Delivered, etc.)
-* Immutable event logging on blockchain
-* Multi-stakeholder interaction (supplier, manufacturer, distributor, retailer, consumer)
+## Contract Behavior
 
-## Technologies Used
+`SupplyChain.sol` defines six stakeholder roles:
 
-* Solidity
-* Ethereum
-* Hardhat
-* Ethers.js
-* MetaMask
-* IPFS (for off-chain storage)
+- Supplier
+- Manufacturer
+- Distributor
+- Retailer
+- Regulator
+- Consumer
 
-## Roles in Supply Chain
-- Supplier -> Registers products
-- Manufacturer -> Processes and updates products
-- Distributor -> Handles shipment and custody transfer
-- Retailer -> Receives and delivers products
-- Regulator -> Verifies and validates product records
-- Consumer -> Views product provenance and authenticity
+It tracks each product with:
 
-## Smart Contracts
-The current draft uses one Solidity contract, `SupplyChain.sol`, which combines stakeholder registration, product registration, and provenance tracking logic for this milestone.
+- Product ID
+- Current owner
+- Lifecycle status
+- Existence flag
+- Regulator verification flag
 
-## System Architecture
+## Tested Scenarios
 
-The system follows a hybrid on-chain/off-chain architecture:
+The test suite verifies:
 
-**On-chain:**
-
-* Smart contracts for product registration and tracking
-* Ownership and lifecycle event management
-
-**Off-chain:**
-
-* Storage of large files such as invoices and metadata using IPFS
-
-## Smart Contracts
-
-The system includes the following contracts:
-
-* Stakeholder Registry Contract
-* Product Registry Contract
-* Provenance Tracking Contract
-
-These contracts manage product lifecycle events, ownership transfers, and validation of updates.
+- Suppliers can register products
+- Non-suppliers cannot register products
+- Only the admin can assign stakeholder roles
+- Product owners can transfer ownership to valid stakeholders
+- Ownership cannot be transferred to unregistered addresses
+- Only product owners can update lifecycle status
+- Regulators can verify products
+- Non-regulators cannot verify products
 
 ## Project Structure
 
-* contracts/ → Solidity smart contracts
-* scripts/ → Deployment scripts
-* test/ → Test files
-* README.md → Project documentation
+```text
+contracts/              Solidity smart contract source
+scripts/                Local deployment script
+test/                   Hardhat contract tests
+.github/workflows/      CI workflow for compile and test verification
+```
 
-## Setup Instructions
+## Local Setup
 
-1. Clone the repository:
-   git clone https://github.com/kundurukarthiksai-creator/cse540-smart-contract-project.git
-
-2. Navigate into the project directory:
-   cd cse540-smart-contract-project
-
-3. Install dependencies:
-   npm install
-
-4. Compile contracts:
-   npx hardhat compile
+```bash
+git clone https://github.com/kundurukarthiksai-creator/cse540-smart-contract-project.git
+cd cse540-smart-contract-project
+npm ci
+npm run compile
+npm test
+```
 
 ## Deployment
 
-To deploy the smart contract locally:
+Run the local deployment script with:
 
+```bash
 npx hardhat run scripts/deploy.js
+```
 
-You can also deploy to a testnet (e.g., Polygon Amoy) using MetaMask.
+No public testnet deployment address is currently committed in this repository.
 
-## Usage
+## Honest Limits
 
-Users can interact with the system by:
+This repository currently proves the smart-contract prototype only. It does not yet include:
 
-* Registering products
-* Updating product status
-* Transferring ownership between stakeholders
-* Viewing product history on the blockchain
+- A production frontend
+- MetaMask wallet flow
+- IPFS metadata storage
+- IoT or oracle integrations
+- Separate registry, product, and provenance contracts
+- Public testnet deployment evidence
+
+Those are future directions, not completed features.
 
 ## Future Improvements
 
-* Integration with IoT devices for real-time tracking
-* Enhanced access control mechanisms
-* Frontend web interface for better usability
-* Improved scalability and gas optimization
+- Split the contract into clearer registry, product, and provenance modules
+- Add richer event history queries for product lifecycle tracking
+- Add deployment configuration for a public testnet
+- Add a frontend for stakeholder workflows
+- Add gas usage reporting and broader edge-case tests
 
 ## Team Members
 
-* Karthik Venkata Sai Reddy Kunduru
-* Shiva Reddy Marri
-* Kamal Teja Annamdasu
-* Pardha Praneeth Pudi
-* Erin Ozcan
+- Karthik Venkata Sai Reddy Kunduru
+- Shiva Reddy Marri
+- Kamal Teja Annamdasu
+- Pardha Praneeth Pudi
+- Erin Ozcan
 
 ## Course
 
 CSE 540: Engineering Blockchain Applications
+
 Arizona State University
